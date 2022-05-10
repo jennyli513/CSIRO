@@ -1,0 +1,4 @@
+{
+  "EnableDeveloperExceptions": "True",
+  "ConnectionStrings": { "DBConnection": "Server=DESKTOP-TR2G9JC\\SQLEXPRESS;Database=CSIRO;Uid=sa;Password=265200as;" }
+}

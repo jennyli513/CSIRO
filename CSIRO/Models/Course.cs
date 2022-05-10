@@ -1,6 +1,6 @@
 ﻿namespace CSIRO.Models
 {
-    public class CourseModel
+    public class Course
     {
         public int CourseID { get; set; }
         public string Title { get; set; }

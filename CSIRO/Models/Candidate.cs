@@ -1,6 +1,6 @@
 ﻿namespace CSIRO.Models
 {
-    public class CandidateModel
+    public class Candidate
     {
         public int CandidateID { get; set; }
         public string Email { get; set; }

@@ -1,0 +1,23 @@
+﻿
+@model IEnumerable<CSIRO.Models.Course>
+
+<h1 class="text-center">Course details</h1>
+
+<div class="container">
+    <table class="table table-striped">
+        <tr>
+            <th>@Html.DisplayNameFor(m=>m.CourseID)</th>
+            <th>@Html.DisplayNameFor(m=>m.Title)</th>
+        </tr>
+        @foreach(var v in Model)
+        {
+            <tr>
+                <td>@v.CourseID</td>
+                <td>@v.Title</td>
+               
+            </tr>
+        }
+    </table>
+  
+
+</div>
