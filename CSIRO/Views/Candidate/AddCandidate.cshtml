@@ -1,0 +1,26 @@
+﻿@model CSIRO.Models.Candidate
+
+<fieldset>
+   <h1 class="text-center">Job Application</h1>
+
+    @using(Html.BeginForm())
+{
+    <table class="table table-striped">
+        <tr><td>@Html.LabelFor(m=>m.FirstName)</td><td>@Html.EditorFor(m=>m.FirstName)</td> </tr>
+       
+        <tr><td>@Html.LabelFor(m=>m.LastName)</td><td>@Html.EditorFor(m=>m.LastName)</td></tr>
+        
+        <tr><td>@Html.LabelFor(m=>m.Email)</td><td>@Html.EditorFor(m=>m.Email)</td></tr>
+       
+        <tr><td>@Html.LabelFor(m=>m.Phone)</td><td>@Html.EditorFor(m=>m.Phone)</td> </tr>
+        
+        <tr><td>@Html.LabelFor(m=>m.CourseID)</td><td>@Html.DropDownListFor(m => m.CourseID, new SelectList(Model.courseList, "Value", "Text"), "Select a course",new {@id="idDD", @class="form-control"})</td></tr>
+         
+        <tr><td>@Html.LabelFor(m=>m.GPA)</td><td>@Html.EditorFor(m=>m.GPA)</td> </tr>
+
+        <tr><td>@Html.LabelFor(m=>m.CoverLetter)</td><td>@Html.EditorFor(m=>m.CoverLetter)</td> </tr>
+        <tr><td></td><td><button type="submit">Add</button></td></tr>
+    </table>
+    }
+
+</fieldset>
