@@ -3,9 +3,11 @@
 <fieldset>
   
     <h1 class="text-center">View Details</h1>
-     
-    @Html.ActionLink("Back to list","ShowCandidates")
-    <div class="row justify-content-center">
+    <div class="text-center">
+         @Html.ActionLink("Back to list","ShowCandidates")
+    </div>
+      
+    <div class="justify-content-center">
         @using(Html.BeginForm())
         {
             <table class="table table-striped">
