@@ -1,0 +1,23 @@
+﻿@model IEnumerable<CSIRO.Models.Candidate>
+
+ <h1 class="text-center">Application List</h1>
+<table class = "table table-striped">
+
+      <tr>
+            <th>@Html.DisplayNameFor(m=>m.CandidateID)</th>
+            <th>@Html.DisplayNameFor(m=>m.Name)</th>
+            <th>@Html.DisplayNameFor(m=>m.CourseTitle)</th>
+            <th>@Html.DisplayNameFor(m=>m.GPA)</th>
+            <th>@Html.DisplayNameFor(m=>m.University)</th>
+        </tr>
+        @foreach(var v in Model)
+        {
+            <tr>
+                <td>@v.CandidateID</td>
+                <td>@v.Name</td>
+                <td>@v.CourseTitle</td>
+                <td>@v.GPA</td>
+                <td>@v.University</td>
+            </tr>
+        }
+</table>

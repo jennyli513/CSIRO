@@ -2,7 +2,7 @@
 
 <fieldset>
    <h1 class="text-center">Job Application</h1>
-
+   <div class="row justify-content-center">
     @using(Html.BeginForm())
 {
     <table class="table table-striped">
@@ -14,13 +14,18 @@
        
         <tr><td>@Html.LabelFor(m=>m.Phone)</td><td>@Html.EditorFor(m=>m.Phone)</td> </tr>
         
-        <tr><td>@Html.LabelFor(m=>m.CourseID)</td><td>@Html.DropDownListFor(m => m.CourseID, new SelectList(Model.courseList, "Value", "Text"), "Select a course",new {@id="idDD", @class="form-control"})</td></tr>
+        <tr><td>@Html.LabelFor(m=>m.CourseID)</td><td>@Html.DropDownListFor(m => m.CourseID, new SelectList(Model.courseList, "Value", "Text"), "Select a course",new {@id="idC", @class="form-control"})</td></tr>
          
         <tr><td>@Html.LabelFor(m=>m.GPA)</td><td>@Html.EditorFor(m=>m.GPA)</td> </tr>
 
+        <tr><td>@Html.LabelFor(m=>m.UniversityID)</td><td>@Html.DropDownListFor(m => m.UniversityID, new SelectList(Model.uniList, "Value", "Text"), "Select your graduate university",new {@id="idU", @class="form-control"})</td></tr>
+        
         <tr><td>@Html.LabelFor(m=>m.CoverLetter)</td><td>@Html.EditorFor(m=>m.CoverLetter)</td> </tr>
-        <tr><td></td><td><button type="submit">Add</button></td></tr>
+       
+        
+        <tr><td></td><td><button class= "btn btn-primary" type="submit">Apply Now</button></td></tr>
     </table>
     }
+    </div>
 
 </fieldset>

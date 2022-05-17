@@ -65,7 +65,7 @@ namespace CSIRO
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Candidate}/{action=AddCandidate}/{id?}");
+                    pattern: "{controller=Candidate}/{action=ShowCandidates}/{id?}");
             });
         }
     }

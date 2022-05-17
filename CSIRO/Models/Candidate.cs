@@ -19,7 +19,7 @@ namespace CSIRO.Models
         
         public string Phone { get; set; }
 
-        public float GPA { get; set; }
+        public double GPA { get; set; }
 
         [Display(Name = "Cover Letter")]
         [DataType(DataType.MultilineText)]
@@ -32,7 +32,17 @@ namespace CSIRO.Models
         public int UniversityID { get; set; }
 
         [NotMapped]
+        public string CourseTitle { get; set; }
+        [NotMapped]
+        public string University { get; set; }
+        [NotMapped]
+        public string Name { get; set; }
+
+        [NotMapped]
         public List<SelectListItem> courseList = new List<SelectListItem>();
+
+        [NotMapped]
+        public List<SelectListItem> uniList = new List<SelectListItem>();
 
 
     }
