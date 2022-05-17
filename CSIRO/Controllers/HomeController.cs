@@ -12,15 +12,29 @@ namespace CSIRO.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly CandidateDataContext _db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, CandidateDataContext db)
         {
             _logger = logger;
+            _db = db;
         }
 
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult DisplayCourse()
+        {
+            Course[] courseArray = _db.course.ToArray<Course>();
+            return View(courseArray);
+        }
+
+        public IActionResult DisplayUniversity()
+        {
+            University[] uniArray = _db.university.ToArray<University>();
+            return View(uniArray);
         }
 
         public IActionResult Privacy()

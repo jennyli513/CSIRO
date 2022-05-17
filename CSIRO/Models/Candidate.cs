@@ -8,7 +8,7 @@ namespace CSIRO.Models
     public class Candidate
     {
        
-        public int CandidateID { get; set; }
+        public long CandidateID { get; set; }
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
@@ -26,14 +26,16 @@ namespace CSIRO.Models
         public string CoverLetter { get; set; }
 
         [Display(Name = "Course Title")]
-        public int CourseID { get; set; }
+        public long CourseID { get; set; }
 
         [Display(Name = "University")]
-        public int UniversityID { get; set; }
+        public long UniversityID { get; set; }
 
         [NotMapped]
+        [Display(Name = "Course Title")]
         public string CourseTitle { get; set; }
         [NotMapped]
+        [Display(Name = "University")]
         public string University { get; set; }
         [NotMapped]
         public string Name { get; set; }

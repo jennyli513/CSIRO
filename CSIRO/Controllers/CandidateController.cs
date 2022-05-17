@@ -98,17 +98,31 @@ namespace CSIRO.Controllers
             }
         }
 
-        public IActionResult DisplayCourse()
+        [HttpGet]
+        public IActionResult ShowOneCandidate(long Id)
         {
-            Course[] courseArray = _db.course.ToArray<Course>();
-            return View(courseArray);
-        }
+            var can = from c1 in _db.course
+                      join c2 in _db.candidate
+                      on c1.CourseID equals c2.CourseID
+                      join u in _db.university
+                      on c2.UniversityID equals u.UniversityID
+                      where c2.CandidateID == Id
+                      select new
+                      {
+                          CandidateID = c2.CandidateID,
+                          FirstName = c2.FirstName,
+                          LastName = c2.LastName,
+                          Email = c2.Email,
+                          Phone = c2.Phone,
+                          CourseTitle = c1.Title,
+                          GPA = c2.GPA,
+                          University = u.Name,
+                          CoverLetter = c2.CoverLetter
+                      };
 
-        public IActionResult DisplayUniversity()
-        {
-            University[] uniArray = _db.university.ToArray<University>();
-            return View(uniArray);
-        }
-
+            Candidate c = (Candidate)can;
+            return View(c);
+           
+        }   
     }
 }

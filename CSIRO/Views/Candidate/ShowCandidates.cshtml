@@ -9,6 +9,7 @@
             <th>@Html.DisplayNameFor(m=>m.CourseTitle)</th>
             <th>@Html.DisplayNameFor(m=>m.GPA)</th>
             <th>@Html.DisplayNameFor(m=>m.University)</th>
+            <th>Action</th>
         </tr>
         @foreach(var v in Model)
         {
@@ -18,6 +19,7 @@
                 <td>@v.CourseTitle</td>
                 <td>@v.GPA</td>
                 <td>@v.University</td>
+                <td>@Html.ActionLink("View Detail", "ShowOneCandidate", "Candidate", new {@id = v.CandidateID}) </td>
             </tr>
         }
 </table>
