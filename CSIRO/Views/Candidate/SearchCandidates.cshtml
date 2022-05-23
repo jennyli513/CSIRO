@@ -1,17 +1,24 @@
 ﻿@model IEnumerable<CSIRO.Models.Candidate>
 
- <h1 class="text-center mt-3 mb-3">Application List</h1>
-  
- @Html.ActionLink("Search for candidates","SearchCandidates")
+<h1>Search For Candidates</h1>
 
-<table class = "table table-hover mt-3">
+
+@using (Html.BeginForm())
+    {
+        <div class="mb-2">
+            Find by name: @Html.TextBox("SearchString", null,new{@style="width:40%"})  
+            <input  type="submit" value="Search" />
+        </div>   
+    }
+
+    <table class = "table table-hover mt-3">
       <tr class="bg-light">
            <th>@Html.DisplayNameFor(m=>m.CandidateID)</th>
-           @* <th>@Html.DisplayNameFor(m=>m.Name)</th>*@
-           <th>@Html.ActionLink("Name", "ShowCandidates", new {sortOrder = ViewBag.NameSortParm})</th>
+            <th>@Html.DisplayNameFor(m=>m.Name)</th>
+          @* <th>@Html.ActionLink("Name", "ShowCandidates", new {sortOrder = ViewBag.NameSortParm})</th>*@
             <th>@Html.DisplayNameFor(m=>m.CourseTitle)</th>
-            @*<th>@Html.DisplayNameFor(m=>m.GPA)</th>*@
-            <th>@Html.ActionLink("GPA", "ShowCandidates", new {sortOrder = ViewBag.GPASortParm})</th>
+            <th>@Html.DisplayNameFor(m=>m.GPA)</th>
+           @* <th>@Html.ActionLink("GPA", "ShowCandidates", new {sortOrder = ViewBag.GPASortParm})</th>*@
             <th>@Html.DisplayNameFor(m=>m.University)</th>
             <th>Action</th>
         </tr>
@@ -27,3 +34,4 @@
             </tr>
         }
 </table>
+

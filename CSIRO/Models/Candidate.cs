@@ -25,11 +25,14 @@ namespace CSIRO.Models
         [DataType(DataType.MultilineText)]
         public string CoverLetter { get; set; }
 
+     
+
         [Display(Name = "Course Title")]
         public long CourseID { get; set; }
 
         [Display(Name = "University")]
         public long UniversityID { get; set; }
+
 
         [NotMapped]
         [Display(Name = "Course Title")]
@@ -38,8 +41,8 @@ namespace CSIRO.Models
         [Display(Name = "University")]
         public string University { get; set; }
         [NotMapped]
-        public string Name { get; set; }
-
+        public string Name;
+       
         [NotMapped]
         public List<SelectListItem> courseList = new List<SelectListItem>();
 

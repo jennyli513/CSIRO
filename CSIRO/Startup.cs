@@ -37,7 +37,7 @@ namespace CSIRO
                 options.UseSqlServer(connectionString);
 
             });
-
+           // services.AddTransient<ICourseRepository, CourseRepository>();
 
         }
 
@@ -65,7 +65,7 @@ namespace CSIRO
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Candidate}/{action=ShowCandidates}/{id?}");
+                    pattern: "{controller=Candidate}/{action=index}/{id?}");
             });
         }
     }
