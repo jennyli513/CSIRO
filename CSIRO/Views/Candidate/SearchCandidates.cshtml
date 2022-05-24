@@ -7,6 +7,7 @@
     {
         <div class="mb-2">
             Find by name: @Html.TextBox("searchString", null,new{@style="width:40%"})  
+            Find by course: @Html.DropDownList("searchCourse", (IEnumerable<SelectListItem>)TempData["Courses"], "---Select a course---")
             <input  type="submit" value="Search" />
         </div>   
     }

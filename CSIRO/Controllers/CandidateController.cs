@@ -113,6 +113,7 @@ namespace CSIRO.Controllers
                           CandidateID = c2.CandidateID,
                           FirstName = c2.FirstName,
                           LastName = c2.LastName,
+                          CourseID = c2.CourseID,
                           CourseTitle = c1.Title,
                           GPA = c2.GPA,
                           University = u.Name,
@@ -127,6 +128,7 @@ namespace CSIRO.Controllers
                     FirstName = c.FirstName,
                     LastName = c.LastName,
                     Name = c.FirstName + " " + c.LastName,
+                    CourseID = c.CourseID,
                     CourseTitle = c.CourseTitle,
                     GPA = c.GPA,
                     University = c.University
@@ -139,20 +141,8 @@ namespace CSIRO.Controllers
 
        
         [HttpGet]
-        public IActionResult SearchCandidates(string searchString)
+        public IActionResult SearchCandidates(string searchString, long searchCourse)
         {
-
-
-            //list for dropdown list (course)
-            //var course = from c in _db.course
-            //             select c;
-            //List<SelectListItem> courseList = new List<SelectListItem>();
-            //foreach (var c in course)
-            //{
-            //   courseList.Add( new SelectListItem { Text = c.Title, Value = c.CourseID.ToString() });
-            //}
-            //ViewBag.Course = courseList;
-
             List<Candidate> can = GetCandidates();
 
             if (!String.IsNullOrEmpty(searchString))
@@ -161,10 +151,26 @@ namespace CSIRO.Controllers
                                      || c.FirstName.ToUpper().Contains(searchString.ToUpper())).ToList();
             }
 
+            if (searchCourse != 0)
+            {
+                can = can.Where(c => c.CourseID == searchCourse).ToList();
+            }
+            BindCourseDropDown();
             return View(can);
         }
 
-        
+        private void BindCourseDropDown()
+        {
+           // dropdown list (course)
+            var course = from c in _db.course
+                         select c;
+            List<SelectListItem> courseList = new List<SelectListItem>();
+            foreach (var c in course)
+            {
+                courseList.Add(new SelectListItem { Text = c.Title, Value = c.CourseID.ToString() });
+            }
+            TempData["Courses"] = courseList;
+        }
 
         [HttpGet]
         public IActionResult ShowOneCandidate(long Id)
