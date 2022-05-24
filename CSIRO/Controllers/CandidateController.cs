@@ -1,6 +1,8 @@
 ﻿using CSIRO.Models;
+using CSIRO.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,16 +14,10 @@ namespace CSIRO.Controllers
     public class CandidateController : Controller
     {
         private readonly CandidateDataContext _db;
-
         public CandidateController(CandidateDataContext db)
         {
-            _db = db;
+            _db = db;             
         }
-
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
 
         public IActionResult Index()
         {
@@ -183,6 +179,20 @@ namespace CSIRO.Controllers
             return View(c);    
         }   
 
-
+        public IActionResult SendInvitation(long Id, Models.Email e)
+        {
+             string strKey = "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";
+           // string strKey = _config.GetValue<string>("SendGridKey");
+            Candidate c = _db.candidate.Find(Id);
+            //string toEmail = "jennyli84513@gmail.com";
+            string toEmail = c.Email;
+            string message = "";
+            message += "Dear " + c.FirstName + " " + c.LastName + ",";
+            message += "You are invited to the interview";
+            message += "Regards";
+            message += "Jenny";
+            EmailOp emailOp = new EmailOp(toEmail, e.fromEmail, e.title,message, strKey);
+            return View("EmailSent");
+        }
     }
 }
