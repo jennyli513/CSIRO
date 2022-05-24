@@ -3,10 +3,10 @@
 <h1>Search For Candidates</h1>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("SearchCandidates", "Candidate", FormMethod.Get))
     {
         <div class="mb-2">
-            Find by name: @Html.TextBox("SearchString", null,new{@style="width:40%"})  
+            Find by name: @Html.TextBox("searchString", null,new{@style="width:40%"})  
             <input  type="submit" value="Search" />
         </div>   
     }
