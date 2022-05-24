@@ -139,7 +139,6 @@ namespace CSIRO.Controllers
 
         }
 
-       
         [HttpGet]
         public IActionResult SearchCandidates(string searchString, long searchCourse)
         {
@@ -155,6 +154,7 @@ namespace CSIRO.Controllers
             {
                 can = can.Where(c => c.CourseID == searchCourse).ToList();
             }
+            //call function to bind dropdown list
             BindCourseDropDown();
             return View(can);
         }
