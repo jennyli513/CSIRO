@@ -14,6 +14,7 @@
             <th>@Html.ActionLink("GPA", "ShowCandidates", new {sortOrder = ViewBag.GPASortParm})</th>
             <th>@Html.DisplayNameFor(m=>m.University)</th>
             <th>Action</th>
+            <th>Invitation</th>
         </tr>
         @foreach(var v in Model)
         {
@@ -24,6 +25,7 @@
                 <td>@v.GPA</td>
                 <td>@v.University</td>
                 <td>@Html.ActionLink("View Detail", "ShowOneCandidate", "Candidate", new {@id = v.CandidateID}) </td>
+                <td>@Html.ActionLink("Send Invitation", "SendInvitation", "Candidate", new {@id = v.CandidateID}) </td>
             </tr>
         }
 </table>

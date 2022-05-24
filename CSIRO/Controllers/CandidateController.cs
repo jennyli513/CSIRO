@@ -1,6 +1,8 @@
 ﻿using CSIRO.Models;
+using CSIRO.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,16 +14,10 @@ namespace CSIRO.Controllers
     public class CandidateController : Controller
     {
         private readonly CandidateDataContext _db;
-
         public CandidateController(CandidateDataContext db)
         {
-            _db = db;
+            _db = db;             
         }
-
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
 
         public IActionResult Index()
         {
@@ -113,6 +109,7 @@ namespace CSIRO.Controllers
                           CandidateID = c2.CandidateID,
                           FirstName = c2.FirstName,
                           LastName = c2.LastName,
+                          CourseID = c2.CourseID,
                           CourseTitle = c1.Title,
                           GPA = c2.GPA,
                           University = u.Name,
@@ -127,6 +124,7 @@ namespace CSIRO.Controllers
                     FirstName = c.FirstName,
                     LastName = c.LastName,
                     Name = c.FirstName + " " + c.LastName,
+                    CourseID = c.CourseID,
                     CourseTitle = c.CourseTitle,
                     GPA = c.GPA,
                     University = c.University
@@ -137,22 +135,9 @@ namespace CSIRO.Controllers
 
         }
 
-       
         [HttpGet]
-        public IActionResult SearchCandidates(string searchString)
+        public IActionResult SearchCandidates(string searchString, long searchCourse)
         {
-
-
-            //list for dropdown list (course)
-            //var course = from c in _db.course
-            //             select c;
-            //List<SelectListItem> courseList = new List<SelectListItem>();
-            //foreach (var c in course)
-            //{
-            //   courseList.Add( new SelectListItem { Text = c.Title, Value = c.CourseID.ToString() });
-            //}
-            //ViewBag.Course = courseList;
-
             List<Candidate> can = GetCandidates();
 
             if (!String.IsNullOrEmpty(searchString))
@@ -161,10 +146,27 @@ namespace CSIRO.Controllers
                                      || c.FirstName.ToUpper().Contains(searchString.ToUpper())).ToList();
             }
 
+            if (searchCourse != 0)
+            {
+                can = can.Where(c => c.CourseID == searchCourse).ToList();
+            }
+            //call function to bind dropdown list
+            BindCourseDropDown();
             return View(can);
         }
 
-        
+        private void BindCourseDropDown()
+        {
+           // dropdown list (course)
+            var course = from c in _db.course
+                         select c;
+            List<SelectListItem> courseList = new List<SelectListItem>();
+            foreach (var c in course)
+            {
+                courseList.Add(new SelectListItem { Text = c.Title, Value = c.CourseID.ToString() });
+            }
+            TempData["Courses"] = courseList;
+        }
 
         [HttpGet]
         public IActionResult ShowOneCandidate(long Id)
@@ -177,6 +179,20 @@ namespace CSIRO.Controllers
             return View(c);    
         }   
 
-
+        public IActionResult SendInvitation(long Id, Models.Email e)
+        {
+             string strKey = "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";
+           // string strKey = _config.GetValue<string>("SendGridKey");
+            Candidate c = _db.candidate.Find(Id);
+            //string toEmail = "jennyli84513@gmail.com";
+            string toEmail = c.Email;
+            string message = "";
+            message += "Dear " + c.FirstName + " " + c.LastName + ",";
+            message += "You are invited to the interview";
+            message += "Regards";
+            message += "Jenny";
+            EmailOp emailOp = new EmailOp(toEmail, e.fromEmail, e.title,message, strKey);
+            return View("EmailSent");
+        }
     }
 }
