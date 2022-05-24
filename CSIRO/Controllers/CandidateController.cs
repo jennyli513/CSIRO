@@ -181,7 +181,7 @@ namespace CSIRO.Controllers
 
         public IActionResult SendInvitation(long Id, Models.Email e)
         {
-             string strKey = "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";
+             string strKey = "";
            // string strKey = _config.GetValue<string>("SendGridKey");
             Candidate c = _db.candidate.Find(Id);
             //string toEmail = "jennyli84513@gmail.com";
