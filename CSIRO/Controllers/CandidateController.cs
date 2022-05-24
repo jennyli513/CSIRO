@@ -43,132 +43,8 @@ namespace CSIRO.Controllers
             return View(can);
         }
 
-        [HttpPost]
-        public IActionResult AddCandidate(Candidate can)
-        {
-            if(!ModelState.IsValid) return View(can);
-            _db.candidate.Add(can);
-            _db.SaveChanges();
-        
-            return View("SuccessApplication");
-        }
-
-
-        [HttpGet]
-        public IActionResult ShowCandidates(string sortOrder)
-        {
-            var can = from c1 in _db.course
-                      join c2 in _db.candidate
-                      on c1.CourseID equals c2.CourseID
-                      join u in _db.university
-                      on c2.UniversityID equals u.UniversityID
-                      select new 
-                      {
-                          CandidateID = c2.CandidateID,
-                          FirstName = c2.FirstName,
-                          LastName = c2.LastName,
-
-                          CourseTitle = c1.Title,
-                          GPA = c2.GPA,
-                          University = u.Name
-                      };
-
-            ViewBag.CurrentSort = sortOrder;
-            //sort by last name and GPA
-            ViewBag.NameSortParm =  "name_asc";
-            ViewBag.GPASortParm =  "GPA_desc";
-            switch (sortOrder)
-            {
-                case "name_asc":
-                    can = can.OrderBy(c => c.LastName);
-                    break;
-                case "GPA_desc":
-                    can = can.OrderByDescending(c => c.GPA);
-                    break;
-                default:
-                    can = can.OrderBy(c => c.CandidateID);
-                    break;
-
-            }
-            
-            List<Candidate> canList = new List<Candidate>();
-            foreach (var c in can)
-            {
-                canList.Add(new Candidate
-                {
-                    CandidateID = c.CandidateID,
-                    FirstName = c.FirstName,
-                    LastName = c.LastName,
-                    Name = c.FirstName + " " + c.LastName,
-                    CourseTitle = c.CourseTitle,
-                    GPA = c.GPA,
-                    University = c.University
-
-                });
-            }
-           
-            return View(canList);
-        }
-
-        
-        public IActionResult SearchCandidates(string searchString)
-        {
-            var can = from c1 in _db.course
-                      join c2 in _db.candidate
-                      on c1.CourseID equals c2.CourseID
-                      join u in _db.university
-                      on c2.UniversityID equals u.UniversityID
-                      select new
-                      {
-                          CandidateID = c2.CandidateID,
-                          FirstName = c2.FirstName,
-                          LastName = c2.LastName,
-                          CourseTitle = c1.Title,
-                          GPA = c2.GPA,
-                          University = u.Name,
-                         
-                      };
-
-            //list for dropdown list (course)
-            //var course = from c in _db.course
-            //             select c;
-            //List<SelectListItem> courseList = new List<SelectListItem>();
-            //foreach (var c in course)
-            //{
-            //   courseList.Add( new SelectListItem { Text = c.Title, Value = c.CourseID.ToString() });
-            //}
-            //ViewBag.Course = courseList;
-
-
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                can = can.Where(c => c.LastName.Contains(searchString)
-                                       || c.FirstName.Contains(searchString));
-            }
-
-
-            List<Candidate> canList = new List<Candidate>();
-            foreach (var c in can)
-            {
-                canList.Add(new Candidate
-                {
-                    CandidateID = c.CandidateID,
-                    FirstName = c.FirstName,
-                    LastName = c.LastName,
-                    Name = c.FirstName + " " + c.LastName,
-                    CourseTitle = c.CourseTitle,
-                    GPA = c.GPA,
-                    University = c.University
-
-                });
-            }
-
-            return View(canList);
-        }
-       
-      
-        private void fillArray(System.Linq.IQueryable<Course> c, System.Linq.IQueryable<University> u,Candidate can)
+        //method to fill array
+        private void fillArray(System.Linq.IQueryable<Course> c, System.Linq.IQueryable<University> u, Candidate can)
         {
             foreach (var course in c)
             {
@@ -187,6 +63,108 @@ namespace CSIRO.Controllers
                 can.uniList.Add(item);
             }
         }
+
+        [HttpPost]
+        public IActionResult AddCandidate(Candidate can)
+        {
+            if(!ModelState.IsValid) return View(can);
+            _db.candidate.Add(can);
+            _db.SaveChanges();
+        
+            return View("SuccessApplication");
+        }
+
+        //show all the candidates and sort by last name asc or GPA desc
+        [HttpGet]
+        public IActionResult ShowCandidates(string sortOrder)
+        {
+
+            List<Candidate> canList = GetCandidates();
+            ViewBag.CurrentSort = sortOrder;
+            //sort by last name and GPA
+            ViewBag.NameSortParm = "name_asc";
+            ViewBag.GPASortParm = "GPA_desc";
+            switch (sortOrder)
+            {
+                case "name_asc":
+                    canList = canList.OrderBy(c => c.LastName).ToList();
+                    break;
+                case "GPA_desc":
+                    canList = canList.OrderByDescending(c => c.GPA).ToList();
+                    break;
+                default:
+                    canList = canList.OrderBy(c => c.CandidateID).ToList();
+                    break;
+
+            }
+            return View(canList);
+        }
+
+        //method to get all the candidates as a list
+        private List<Candidate> GetCandidates()
+        {
+            var can = from c1 in _db.course
+                      join c2 in _db.candidate
+                      on c1.CourseID equals c2.CourseID
+                      join u in _db.university
+                      on c2.UniversityID equals u.UniversityID
+                      select new
+                      {
+                          CandidateID = c2.CandidateID,
+                          FirstName = c2.FirstName,
+                          LastName = c2.LastName,
+                          CourseTitle = c1.Title,
+                          GPA = c2.GPA,
+                          University = u.Name,
+
+                      };
+            List<Candidate> canList = new List<Candidate>();
+            foreach (var c in can)
+            {
+                canList.Add(new Candidate
+                {
+                    CandidateID = c.CandidateID,
+                    FirstName = c.FirstName,
+                    LastName = c.LastName,
+                    Name = c.FirstName + " " + c.LastName,
+                    CourseTitle = c.CourseTitle,
+                    GPA = c.GPA,
+                    University = c.University
+
+                });
+            }
+            return canList;
+
+        }
+
+       
+        [HttpGet]
+        public IActionResult SearchCandidates(string searchString)
+        {
+
+
+            //list for dropdown list (course)
+            //var course = from c in _db.course
+            //             select c;
+            //List<SelectListItem> courseList = new List<SelectListItem>();
+            //foreach (var c in course)
+            //{
+            //   courseList.Add( new SelectListItem { Text = c.Title, Value = c.CourseID.ToString() });
+            //}
+            //ViewBag.Course = courseList;
+
+            List<Candidate> can = GetCandidates();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                can = can.Where(c => c.LastName.ToUpper().Contains(searchString.ToUpper())
+                                     || c.FirstName.ToUpper().Contains(searchString.ToUpper())).ToList();
+            }
+
+            return View(can);
+        }
+
+        
 
         [HttpGet]
         public IActionResult ShowOneCandidate(long Id)
