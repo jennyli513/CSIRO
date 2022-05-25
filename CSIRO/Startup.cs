@@ -1,7 +1,10 @@
 using CSIRO.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,14 +33,26 @@ namespace CSIRO
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
+            //policy
+            services.AddMvc(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
             services.AddDbContext<CandidateDataContext>(options =>
             {
                 var connectionString = configuration.GetConnectionString("DBConnection");
                 options.UseSqlServer(connectionString);
 
             });
-           // services.AddTransient<ICourseRepository, CourseRepository>();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<CandidateDataContext>()
+                .AddDefaultTokenProviders();
+            // services.AddTransient<ICourseRepository, CourseRepository>();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
 
         }
 
@@ -56,9 +71,9 @@ namespace CSIRO
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -67,6 +82,7 @@ namespace CSIRO
                     name: "default",
                     pattern: "{controller=Candidate}/{action=index}/{id?}");
             });
+            app.UseFileServer();
         }
     }
 }
