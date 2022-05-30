@@ -2,6 +2,7 @@
 using CSIRO.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -176,8 +177,42 @@ namespace CSIRO.Controllers
             c.CourseTitle = c1.Title;
             University u = _db.university.Find(c.UniversityID);
             c.University = u.Name;
-            return View(c);    
-        }   
+            return View(c);
+           
+        }
+
+        [HttpGet]
+        public IActionResult EditCandidate(long Id)
+        {
+            Candidate c = _db.candidate.Find(Id);
+
+            populateCourseDropDownList(c.CourseID);
+            populateUniDropDownList(c.UniversityID);
+            return View(c);
+        }
+
+        //function to populate course/university dropdown list
+        private void populateCourseDropDownList(object selectedCourse = null)
+        {
+            var c = from v in _db.course
+                     select v;
+            ViewBag.CourseID = new SelectList(c, "CourseID", "Title", selectedCourse);
+        } 
+        private void populateUniDropDownList(object selectedUni = null)
+        {
+            var u = from v in _db.university
+                    select v;
+            ViewBag.UniversityID = new SelectList(u, "UniversityID", "Name", selectedUni);
+        }
+
+        [HttpPost]
+        public IActionResult EditCandidate(Candidate c)
+        {
+            _db.Entry(c).State = EntityState.Modified;
+
+            _db.SaveChanges();
+            return RedirectToAction("ShowCandidates");
+        }
 
         public IActionResult SendInvitation(long Id, Models.Email e)
         {

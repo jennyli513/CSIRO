@@ -1,0 +1,28 @@
+﻿@model CSIRO.Models.Candidate
+
+<fieldset>
+  
+    <h1 class="text-center">View Details</h1>
+    <div class="text-center">
+         @Html.ActionLink("Back to list","ShowCandidates")
+    </div>
+      
+    <div class="justify-content-center">
+        @using(Html.BeginForm())
+        {
+            <table class="table table-striped">
+               <tr><td>@Html.LabelFor(m=>m.CandidateID)</td><td>@Html.TextBoxFor(m=>m.CandidateID, new { @readonly = true })</td> </tr>
+                <tr><td>@Html.LabelFor(m=>m.FirstName)</td><td>@Html.EditorFor(m=>m.FirstName)</td></tr>
+                <tr><td>@Html.LabelFor(m=>m.LastName)</td><td>@Html.EditorFor(m=>m.LastName)</td></tr>
+                
+                <tr><td>@Html.LabelFor(m=>m.Email)</td><td>@Html.EditorFor(m=>m.Email)</td> </tr>
+                <tr><td>@Html.LabelFor(m=>m.Phone)</td><td>@Html.EditorFor(m=>m.Phone)</td> </tr>
+                <tr><td>@Html.LabelFor(m=>m.CourseID)</td><td>@Html.DropDownList("CourseID")</td></tr>
+                <tr><td>@Html.LabelFor(m=>m.GPA)</td><td>@Html.EditorFor(m=>m.GPA)</td> </tr>
+                <tr><td>@Html.LabelFor(m=>m.UniversityID)</td><td>@Html.DropDownList("UniversityID")</td></tr>
+                <tr><td>@Html.LabelFor(m=>m.CoverLetter)</td><td>@Html.EditorFor(m=>m.CoverLetter)</td> </tr>
+            
+             <tr><td></td><td><button class= "btn btn-primary" type="submit">Edit</button></td></tr>
+            </table>
+        }
+    </div>

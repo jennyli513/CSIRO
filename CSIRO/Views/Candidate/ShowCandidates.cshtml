@@ -25,6 +25,7 @@
                 <td>@v.GPA</td>
                 <td>@v.University</td>
                 <td>@Html.ActionLink("View Detail", "ShowOneCandidate", "Candidate", new {@id = v.CandidateID}) </td>
+               @* <td>@Html.ActionLink("Edit Detail", "EditCandidate", "Candidate", new {@id = v.CandidateID}) </td>*@
                 <td>@Html.ActionLink("Send Invitation", "SendInvitation", "Candidate", new {@id = v.CandidateID}) </td>
             </tr>
         }

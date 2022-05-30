@@ -1,6 +1,6 @@
 {
   "EnableDeveloperExceptions": "True",
-  "ConnectionStrings": { "DBConnection": "Server=DESKTOP-TR2G9JC\\SQLEXPRESS;Database=CSIRO;Uid=sa;Password=265200as;" },
+  "ConnectionStrings": { "DBConnection": "Server=DESKTOP-TR2G9JC\\SQLEXPRESS;Database=CSIRO1;Uid=sa;Password=265200as;" },
 
   "SendGridKey": ""
 }

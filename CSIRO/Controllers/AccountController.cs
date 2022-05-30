@@ -87,7 +87,7 @@ namespace ArchiDemo.Controllers
                     var user = await userManager.FindByNameAsync(m.Email);
                     var userId = user.Id;
                     HttpContext.Session.SetString("userId", userId);
-                    return RedirectToAction("SearchCandidates", "Candidate");
+                    return RedirectToAction("ShowCandidates", "Candidate");
                 }
                 ModelState.AddModelError("", "Invalid attempt");
             }
