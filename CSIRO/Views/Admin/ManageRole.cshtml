@@ -1,0 +1,25 @@
+﻿@model CSIRO.Models.ManageRole
+
+<fieldset>
+<h1 class="text-center">Assign Roles</h1>
+<p>@Html.ActionLink("View Roles","Display","Admin")</p>
+	<div class="row justify-content-center">
+	@using (Html.BeginForm())
+	{
+		<table class="table table-striped table-info table-hover">
+			<tr>
+				<td>@Html.LabelFor(m=>m.userList)</td>
+				<td>@Html.DropDownListFor(m=>m.userID,new SelectList(Model.userList,"Value","Text"),"Select a user")</td>
+			</tr>
+			<tr>
+				<td>@Html.LabelFor(m=>m.roleList)</td>
+				<td>@Html.DropDownListFor(m=>m.roleID,new SelectList(Model.roleList,"Value","Text"),"Select a role")</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><button type="submit" class="btn btn-primary">Assign Role</button></td>
+			</tr>
+		</table>
+	}
+	</div>
+</fieldset>

@@ -36,7 +36,17 @@
                 <li><a class="dropdown-item" href="@Url.Action("DisplayCourse", "Home")">Course</a></li>
               </ul>
             </li>
-            </ul>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Admin
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="@Url.Action("SearchCandidates", "Candidate")">Search Candidates</a></li>
+                <li><a class="dropdown-item" href="@Url.Action("Display", "Admin")">View/Manage Roles</a></li>
+              </ul>
+            </li>
+          </ul>
 
              <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
             <li class="nav-item">

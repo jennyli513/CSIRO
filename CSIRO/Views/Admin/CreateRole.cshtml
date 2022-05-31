@@ -1,0 +1,16 @@
+﻿@model CSIRO.Models.CreateRoleViewModel
+
+<h1 class="text-center">Create a Role</h1>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+		<form method="post">
+			<div asp-validation-summary="All" class="text-danger"></div>
+			<div class="form-control" style="min-height:100px;">
+				<label asp-for="RoleName">Role</label>
+				<input asp-for="RoleName" id="id1" class="form-control" />
+				<span asp-validation-for="RoleName" class="text-danger"></span>
+			</div>
+			<button type="submit" class="btn btn-outline-primary">Create Role</button>
+		</form>
+	</div>
+</div>
