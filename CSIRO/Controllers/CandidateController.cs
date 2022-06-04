@@ -1,5 +1,6 @@
 ﻿using CSIRO.Models;
 using CSIRO.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,8 @@ namespace CSIRO.Controllers
             return View();
         }
 
+
+        [Authorize(Roles = "Candidate")]
         [HttpGet]
 
         //this method is to add an candidate
@@ -61,6 +64,7 @@ namespace CSIRO.Controllers
             }
         }
 
+        [Authorize(Roles = "Candidate")]
         [HttpPost]
         public IActionResult AddCandidate(Candidate can)
         {
@@ -71,6 +75,7 @@ namespace CSIRO.Controllers
             return View("SuccessApplication");
         }
 
+        [Authorize(Roles = "Admin")]
         //show all the candidates and sort by last name asc or GPA desc
         [HttpGet]
         public IActionResult ShowCandidates(string sortOrder)
@@ -135,7 +140,7 @@ namespace CSIRO.Controllers
             return canList;
 
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult SearchCandidates(string searchString, long searchCourse)
         {
@@ -169,6 +174,7 @@ namespace CSIRO.Controllers
             TempData["Courses"] = courseList;
         }
 
+        [Authorize(Roles = "Admin, Candidate")]
         [HttpGet]
         public IActionResult ShowOneCandidate(long Id)
         {
@@ -181,6 +187,8 @@ namespace CSIRO.Controllers
            
         }
 
+
+        [Authorize(Roles = "Candidate")]
         [HttpGet]
         public IActionResult EditCandidate(long Id)
         {
@@ -205,6 +213,7 @@ namespace CSIRO.Controllers
             ViewBag.UniversityID = new SelectList(u, "UniversityID", "Name", selectedUni);
         }
 
+        [Authorize(Roles = "Candidate")]
         [HttpPost]
         public IActionResult EditCandidate(Candidate c)
         {
@@ -213,6 +222,7 @@ namespace CSIRO.Controllers
             _db.SaveChanges();
             return RedirectToAction("ShowCandidates");
         }
+
 
         public IActionResult SendInvitation(long Id, Models.Email e)
         {

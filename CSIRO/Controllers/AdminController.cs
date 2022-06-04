@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace CSIRO.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private RoleManager<IdentityRole> roleManager { get; }

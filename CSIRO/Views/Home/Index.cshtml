@@ -2,7 +2,18 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div >
+    <h1 class="display-4">Welcome to CSIRO!</h1>
+    <div>
+        <h4 > Job Title: Research Officer</h4>
+        <p ">CSIRO is one of the popular research organizations in Australia. The organization would like to absorb competent candidates for research work using Machine Learning and Data Science. The research is related to the causality rate caused by the vaccination of COVID-19 in Australia. </p>
+        <p>The competent candidates must:</p>
+       <ul>
+           <li> Have qualifications in any one of the following qualifications such as Master of Data Science, Master of AI, Master of Information Technology.</li>
+           <li>The GPA score should be 3 or Higher.</li>
+           <li>Must be graduated from top first 100 universities in global ranking</li>
+       </ul>
+       <p>Is this the role for you?</p>
+       @Html.ActionLink("Apply Now!", "AddCandidate", "Candidate")
+    </div>
 </div>

@@ -80,7 +80,7 @@ namespace CSIRO
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Candidate}/{action=index}/{id?}");
+                    pattern: "{controller=Home}/{action=index}/{id?}");
             });
             app.UseFileServer();
         }
