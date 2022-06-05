@@ -105,9 +105,12 @@ namespace CSIRO.Controllers
             }
             return View(m);
         }
-       
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Login", "Account");
+        }
 
-     
         public IActionResult Index()
         {
             return View();
