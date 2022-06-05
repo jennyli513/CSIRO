@@ -40,7 +40,6 @@ namespace CSIRO.Models
         [Display(Name = "University")]
         public long UniversityID { get; set; }
 
-       // public string userId { get; set; }
 
         [NotMapped]
         [Display(Name = "Course Title")]

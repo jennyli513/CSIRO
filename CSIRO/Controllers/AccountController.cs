@@ -88,6 +88,7 @@ namespace CSIRO.Controllers
                 {
                     var user = await userManager.FindByNameAsync(m.Email);  
                     var userId = user.Id;
+                    var userEmail = user.Email;
 
                     HttpContext.Session.SetString("userId", userId);
                     var roles = await userManager.GetRolesAsync(user);
@@ -95,15 +96,18 @@ namespace CSIRO.Controllers
                     {
                         return RedirectToAction("ShowCandidates", "Candidate");
                     }
-                    if (roles.Count ==0 ||roles.Contains("Candidate"))
+                    if (roles.Contains("Candidate"))
+                        return RedirectToAction("EditCandidate", "Candidate", new { id = userEmail });
+                    if (roles.Count == 0)
                         return RedirectToAction("AddCandidate", "Candidate");
-
                 }
                 ModelState.AddModelError("", "Invalid attempt");
             }
             return View(m);
         }
        
+
+     
         public IActionResult Index()
         {
             return View();

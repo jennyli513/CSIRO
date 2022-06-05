@@ -28,7 +28,7 @@ namespace CSIRO.Controllers
         }
 
 
-       // [Authorize(Roles = "Candidate")]
+       // [Authorize(Roles = "Candidate" )]
         [HttpGet]
 
         //this method is to add an candidate
@@ -188,11 +188,25 @@ namespace CSIRO.Controllers
         }
 
 
+        //[Authorize(Roles = "Candidate")]
+        //[HttpGet]
+        //public IActionResult EditCandidate(long Id)
+        //{
+        //    Candidate c = _db.candidate.Find(Id);
+
+        //    populateCourseDropDownList(c.CourseID);
+        //    populateUniDropDownList(c.UniversityID);
+        //    return View(c);
+        //}
+
+
         [Authorize(Roles = "Candidate")]
         [HttpGet]
-        public IActionResult EditCandidate(long Id)
+        public IActionResult EditCandidate(string Id)
         {
-            Candidate c = _db.candidate.Find(Id);
+            // Candidate c = _db.candidate.Find(Id);
+
+            Candidate c = _db.candidate.SingleOrDefault(can=>can.Email == Id);
 
             populateCourseDropDownList(c.CourseID);
             populateUniDropDownList(c.UniversityID);
@@ -220,7 +234,7 @@ namespace CSIRO.Controllers
             _db.Entry(c).State = EntityState.Modified;
 
             _db.SaveChanges();
-            return RedirectToAction("ShowCandidates");
+            return View("SuccessApplication");
         }
 
 
