@@ -28,7 +28,7 @@ namespace CSIRO.Controllers
         }
 
 
-        [Authorize(Roles = "Candidate")]
+       // [Authorize(Roles = "Candidate")]
         [HttpGet]
 
         //this method is to add an candidate
@@ -64,7 +64,7 @@ namespace CSIRO.Controllers
             }
         }
 
-        [Authorize(Roles = "Candidate")]
+      //  [Authorize(Roles = "Candidate")]
         [HttpPost]
         public IActionResult AddCandidate(Candidate can)
         {

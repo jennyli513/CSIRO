@@ -12,10 +12,12 @@ namespace CSIRO.Controllers
     {
         private UserManager<IdentityUser> userManager { get; }
         private SignInManager<IdentityUser> signInManager { get; }
+        //private RoleManager<IdentityRole> roleManager { get; }
         public AccountController(UserManager<IdentityUser> _userManager, SignInManager<IdentityUser> _signInManager)
         {
             this.userManager = _userManager;
             this.signInManager = _signInManager;
+          //  this.roleManager = _roleManager;
         }
 
         [HttpGet]
@@ -84,16 +86,24 @@ namespace CSIRO.Controllers
                 var result = await signInManager.PasswordSignInAsync(m.Email, m.Password, m.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    var user = await userManager.FindByNameAsync(m.Email);
+                    var user = await userManager.FindByNameAsync(m.Email);  
                     var userId = user.Id;
+
                     HttpContext.Session.SetString("userId", userId);
-                    return RedirectToAction("ShowCandidates", "Candidate");
+                    var roles = await userManager.GetRolesAsync(user);
+                    if(roles.Contains("Admin"))
+                    {
+                        return RedirectToAction("ShowCandidates", "Candidate");
+                    }
+                    if (roles.Count ==0 ||roles.Contains("Candidate"))
+                        return RedirectToAction("AddCandidate", "Candidate");
+
                 }
                 ModelState.AddModelError("", "Invalid attempt");
             }
             return View(m);
         }
-
+       
         public IActionResult Index()
         {
             return View();

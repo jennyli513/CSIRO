@@ -9,16 +9,23 @@ namespace CSIRO.Models
     {
        
         public long CandidateID { get; set; }
+
+        [Required(ErrorMessage = "Enter first name")]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
-
+        [Required(ErrorMessage = "Enter last name")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        [Required(ErrorMessage = "Enter email")]
+        [EmailAddress]
         public string Email { get; set; }
-        
+
+        [Required(ErrorMessage = "Enter Phone")]
         public string Phone { get; set; }
 
+        [Required(ErrorMessage = "Enter GPA greater than 3.0")]
+        [Range(minimum:3.0, maximum:5.0)]
         public double GPA { get; set; }
 
         [Display(Name = "Cover Letter")]
@@ -33,6 +40,7 @@ namespace CSIRO.Models
         [Display(Name = "University")]
         public long UniversityID { get; set; }
 
+       // public string userId { get; set; }
 
         [NotMapped]
         [Display(Name = "Course Title")]
