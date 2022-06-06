@@ -205,7 +205,7 @@ namespace CSIRO.Controllers
         public IActionResult EditCandidate(string Id)
         {
             // Candidate c = _db.candidate.Find(Id);
-
+         
             Candidate c = _db.candidate.SingleOrDefault(can=>can.Email == Id);
 
             populateCourseDropDownList(c.CourseID);
@@ -231,6 +231,7 @@ namespace CSIRO.Controllers
         [HttpPost]
         public IActionResult EditCandidate(Candidate c)
         {
+            
             _db.Entry(c).State = EntityState.Modified;
 
             _db.SaveChanges();
@@ -240,16 +241,16 @@ namespace CSIRO.Controllers
 
         public IActionResult SendInvitation(long Id, Models.Email e)
         {
-             string strKey = "";
+             string strKey = "You API Key";
            // string strKey = _config.GetValue<string>("SendGridKey");
             Candidate c = _db.candidate.Find(Id);
-            //string toEmail = "jennyli84513@gmail.com";
-            string toEmail = c.Email;
+           
+           string toEmail = c.Email;
             string message = "";
             message += "Dear " + c.FirstName + " " + c.LastName + ",";
-            message += "You are invited to the interview";
-            message += "Regards";
-            message += "Jenny";
+            message += "\nYou are invited to the interview";
+            message += "\nRegards";
+            message += "\nJenny";
             EmailOp emailOp = new EmailOp(toEmail, e.fromEmail, e.title,message, strKey);
             return View("EmailSent");
         }

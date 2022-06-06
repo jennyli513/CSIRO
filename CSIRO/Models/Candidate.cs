@@ -28,6 +28,7 @@ namespace CSIRO.Models
         [Range(minimum:3.0, maximum:5.0)]
         public double GPA { get; set; }
 
+        [Required(ErrorMessage = "Enter Your cover letter")]
         [Display(Name = "Cover Letter")]
         [DataType(DataType.MultilineText)]
         public string CoverLetter { get; set; }
